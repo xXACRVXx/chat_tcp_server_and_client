@@ -11,10 +11,10 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 server.bind((host, port))
 server.listen()
-nombre_equipo = socket.gethostname()
-direccion_equipo = socket.gethostbyname(nombre_equipo)
+name = socket.gethostname()
+ip = socket.gethostbyname(name)
 
-print(f"Server running on {direccion_equipo}:{port}")
+print(f"Server running on {ip}:{port}")
 
 
 clients = []
@@ -50,7 +50,7 @@ def broadcast(message, _client):
      
     else:
       for client in clients:
-        print('el cliente', client)
+        print('el cliente', client, '\n\n')
         if client != _client:
             client.send(message)
            # print('memsage enviado', client, 'lo otro', _client)
@@ -61,7 +61,7 @@ def handle_messages(client):
             message = client.recv(1024)
             broadcast(message, client)
            
-            print('mensage', message.decode(fmt))
+            print('mensage', message.decode(fmt),'\n\n')
         except:
             index = clients.index(client)
             username = usernames[index]
@@ -79,7 +79,7 @@ def receive_connections():
         client.send("@username".encode("utf-8"))
         username = client.recv(1024).decode('utf-8')
         
-        print('el_username', username)
+        print('el_username', username, "\n\n")
         
         los_users = { username : client}
         
@@ -88,7 +88,7 @@ def receive_connections():
         clients.append(client)
         usernames.append(username)
 
-        print(f"{username} is connected with {str(address)}")
+        print(f"{username} is connected with {str(address)}\n\n")
 
         message = f"ChatBot: {username} joined the chat!".encode("utf-8")
         broadcast(message, client)

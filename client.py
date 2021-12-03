@@ -1,9 +1,11 @@
 import socket   
 import threading
 
+host = str(input("Enter ip from server: "))
+
 username = input("Enter your username: ")
 
-host = 'localhost'
+
 port = 55555
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,8 +28,8 @@ def receive_messages():
 
 def write_messages():
     while True:
-        #message = f"{username}: {input('')}\n"
-        message = input('')
+        message = f"{username}: {input('')}\n"
+        #message = input('')
         client.send(message.encode('utf-8'))
 
 receive_thread = threading.Thread(target=receive_messages)
