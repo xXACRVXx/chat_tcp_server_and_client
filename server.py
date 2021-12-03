@@ -11,7 +11,10 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 server.bind((host, port))
 server.listen()
-print(f"Server running on {host}:{port}")
+nombre_equipo = socket.gethostname()
+direccion_equipo = socket.gethostbyname(nombre_equipo)
+
+print(f"Server running on {direccion_equipo}:{port}")
 
 
 clients = []
@@ -50,7 +53,7 @@ def broadcast(message, _client):
         print('el cliente', client)
         if client != _client:
             client.send(message)
-            print('memsage enviado', client, 'lo otro', _client)
+           # print('memsage enviado', client, 'lo otro', _client)
 
 def handle_messages(client):
     while True:
@@ -58,7 +61,7 @@ def handle_messages(client):
             message = client.recv(1024)
             broadcast(message, client)
            
-            print('mensage', message.decode(fmt), 'client', client)
+            print('mensage', message.decode(fmt))
         except:
             index = clients.index(client)
             username = usernames[index]
